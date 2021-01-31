@@ -6,6 +6,17 @@ public class Puzzle_Loader : MonoBehaviour
 {
     public GameObject PuzzleToBeSolved;
     public bool StartSolvePuzzle = false;
+    bool played;
+    public AudioSource puzzleAudio;
+    AudioClip puzzleAudioClip;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        played = false;
+        puzzleAudioClip = puzzleAudio.clip;
+
+    }
 
     //if Player is In front of the puzzle door
     private void OnTriggerEnter2D(Collider2D collision)
@@ -26,11 +37,7 @@ public class Puzzle_Loader : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
+    
 
 
     // Update is called once per frame
@@ -40,12 +47,18 @@ public class Puzzle_Loader : MonoBehaviour
         {
             //if the player is in front of the puzzle door and press R
             //then Show the door's Puzzle
-            if (Input.GetKeyDown(KeyCode.R))
+            if (Input.GetKeyDown(KeyCode.R) && !played)
+            {
+                puzzleAudio.Play();
+                played = true;
+                PlayerMovement.freezed = true;
+            }
+            if(played && !puzzleAudio.isPlaying)
             {
                 StartSolvePuzzle = false;
-                //load or acive your puzzle her
                 PuzzleToBeSolved.SetActive(true);
             }
         }
+        
     }
 }

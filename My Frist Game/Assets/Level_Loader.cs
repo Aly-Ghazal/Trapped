@@ -7,6 +7,8 @@ public class Level_Loader : MonoBehaviour
 {
     public int LevelToLoad;
     public bool ToNextRoom=false;
+    public static bool messageEnded = false;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
@@ -35,7 +37,7 @@ public class Level_Loader : MonoBehaviour
     {
         if (ToNextRoom)
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.E) && messageEnded)
             {
                 ToNextRoom=false;
                 SceneManager.LoadScene(LevelToLoad);

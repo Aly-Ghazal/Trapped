@@ -6,7 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
 
     public CharacterController2D controller;
-
+    public static bool freezed = false;
     public float runSpeed = 40f;
 
     float horizontalMove = 0f;
@@ -17,14 +17,17 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
-        animator.SetFloat("Speed", Mathf.Abs(horizontalMove) );
+        if(!freezed)
+        {
+            horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
+            animator.SetFloat("Speed", Mathf.Abs(horizontalMove) );
+        }
     }
 
     void FixedUpdate()
     {
         // Move our character
-        controller.Move(horizontalMove * Time.fixedDeltaTime, true, false);
+        if(!freezed)
+            controller.Move(horizontalMove * Time.fixedDeltaTime, true, false);
     }
 }

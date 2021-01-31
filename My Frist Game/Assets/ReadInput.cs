@@ -10,9 +10,12 @@ public class ReadInput : MonoBehaviour
     [SerializeField] private GameObject win;
     [SerializeField] private GameObject hide;
     private string input;
+    public AudioSource pass;
+    
     // Start is called before the first frame update
     void Start()
     {
+        
         var input = gameObject.GetComponent<InputField>();
         var se = new InputField.SubmitEvent();
         se.AddListener(ReadStr);
@@ -29,10 +32,17 @@ public class ReadInput : MonoBehaviour
     public void ReadStr(string s)
     {
 
-       if (s.ToLower().Equals("death"))
+       if (s.ToLower().Contains("death") )
         {
+        
             hide.SetActive(false);
+            PlayerMovement.freezed = false;
+            
             win.SetActive(true);
+            pass.Play();
+            
+
+            
         }
 
     }

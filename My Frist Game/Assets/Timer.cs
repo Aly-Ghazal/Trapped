@@ -7,9 +7,10 @@ public class Timer : MonoBehaviour
 {
     [SerializeField] public Text TimerText;
     [SerializeField] public float timeRemaining;
-
+    public GameObject deadScene;
     void start()
     {
+        deadScene.SetActive(false);
         TimerText.text = timeRemaining.ToString("0.00"); ;
     }
 
@@ -20,10 +21,13 @@ public class Timer : MonoBehaviour
         if (timeRemaining > 0)
         {
             timeRemaining -= Time.deltaTime;
-        }
 
+        }
         else
         {
+            PlayerMovement.freezed = false;
+            deadScene.SetActive(true);
+
             Debug.Log("Time has run out!");
         }
     }
